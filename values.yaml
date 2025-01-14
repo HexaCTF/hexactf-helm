@@ -4,6 +4,7 @@ global:
   imagePullSecrets: []
   storageClass: ""
   env: production
+  imagePullPolicy: IfNotPresent
 
 # Kafka Configuration
 kafka:
@@ -55,8 +56,8 @@ db:
       username: challenge_user
       password: challenge_password
     persistence:
-      enabled: false
-      storageClass: ${global.storageClass}
+      enabled: true
+      storageClass: hostpath
       size: 8Gi
     config:
       characterSet: utf8mb4
@@ -75,7 +76,7 @@ challenge-operator:
       logLevel: "info"
     kubeconfig:
       enabled: true
-      mountPath: /home/nonroot/.kube/config
+      mountPath: /home/nonroot/.kube
 
 # Challenge Server Configuration
 challenge-server:
@@ -96,7 +97,7 @@ challenge-server:
         maxOverflow: 10
     kubeconfig:
       enabled: true
-      mountPath: /root/.kube/config
+      mountPath: /root/.kube
     service:
       type: ClusterIP
-      port: 8000
+      port: 5001

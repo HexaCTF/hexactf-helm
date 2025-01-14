@@ -7,6 +7,7 @@ app:
   image:
     repository: hexactf/challenge-api
     tag: "latest"
+    pullPolicy: Never
   config:
     flaskEnv: development
     secretKey: your-super-secret-key-here
@@ -18,10 +19,10 @@ app:
       maxOverflow: 10
   kubeconfig:
     enabled: true
-    mountPath: /root/.kube/config
+    mountPath: /root/.kube
   service:
-    type: ClusterIP
-    port: 8000
+    type: NodePort
+    port: 5001
 
 kafka:
   service:

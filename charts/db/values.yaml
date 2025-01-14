@@ -7,6 +7,7 @@ mariadb:
   image:
     repository: mariadb
     tag: "10.6"
+    pullPolicy: IfNotPresent
   service:
     port: 3306
   auth:

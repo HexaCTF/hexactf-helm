@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-app
+  annotations:
+    "helm.sh/hook-weight": "10"
 spec:
   replicas: 1
   selector:
@@ -15,13 +17,14 @@ spec:
       containers:
         - name: app
           image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.app.service.port }}
           env:
             - name: FLASK_ENV
               value: {{ .Values.app.config.flaskEnv }}
             - name: DB_HOST
-              value: "{{ .Release.Name }}-db-mariadb"
+              value: "{{ .Release.Name }}-mariadb"
             - name: DB_PORT
               value: {{ .Values.mariadb.service.port | quote }}
             - name: DB_NAME
@@ -37,7 +40,7 @@ spec:
             - name: SECRET_KEY
               value: {{ .Values.app.config.secretKey }}
             - name: KAFKA_BOOTSTRAP_SERVERS
-              value: "{{ .Release.Name }}-kafka-kafka:{{ .Values.kafka.service.external.port }}"
+              value: "{{ .Release.Name }}-kafka:{{ .Values.kafka.service.external.port }}"
             - name: KAFKA_TOPIC
               value: {{ .Values.app.config.kafka.topic }}
             - name: KAFKA_GROUP_ID
@@ -52,5 +55,5 @@ spec:
       volumes:
         - name: kubeconfig
           hostPath:
-            path: ${HOME}/.kube/config
+            path: /tmp/k
           {{- end }}

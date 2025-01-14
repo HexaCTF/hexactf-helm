@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-operator
+  annotations:
+    "helm.sh/hook-weight": "0"
 spec:
   replicas: 1
   selector:
@@ -12,20 +14,22 @@ spec:
       labels:
         app: challenge-operator
     spec:
+      serviceAccountName: {{ .Release.Name }}-operator
       containers:
         - name: operator
           image: {{ .Values.operator.image.repository }}:{{ .Values.operator.image.tag }}
+          imagePullPolicy: {{ .Values.operator.image.pullPolicy }}
           env:
             - name: DEVELOPMENT
               value: {{ .Values.operator.config.development | quote }}
             - name: METRICS_ADDR
               value: {{ .Values.operator.config.metricsAddr }}
             - name: KAFKA_BROKERS
-              value: "{{ .Release.Name }}-kafka-kafka:{{ .Values.kafka.service.external.port }}"
+              value: "{{ .Release.Name }}-kafka:{{ .Values.kafka.service.external.port }}"
             - name: LOG_LEVEL
               value: {{ .Values.operator.config.logLevel }}
             - name: KUBECONFIG
-              value: {{ .Values.operator.kubeconfig.mountPath }}
+              value: {{ .Values.operator.kubeconfig.mountPath }}/config
           {{- if .Values.operator.kubeconfig.enabled }}
           volumeMounts:
             - name: kubeconfig
@@ -34,5 +38,5 @@ spec:
       volumes:
         - name: kubeconfig
           hostPath:
-            path: ${HOME}/.kube/config
+            path: /tmp/k/config
           {{- end }}

@@ -1,0 +1,38 @@
+# kafka/values.yaml
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+
+zookeeper:
+  enabled: true
+  image:
+    repository: confluentinc/cp-zookeeper
+    tag: "7.0.0"
+  service:
+    port: 2181
+  config:
+    clientPort: 2181
+    tickTime: 2000
+
+kafka:
+  enabled: true
+  image:
+    repository: confluentinc/cp-kafka
+    tag: "latest"
+  service:
+    internal:
+      port: 9092
+    external:
+      port: 9093
+  config:
+    brokerId: 1
+    autoCreateTopics: true
+    offsetsTopicReplicationFactor: 1
+
+kafkaUI:
+  enabled: true
+  image:
+    repository: provectuslabs/kafka-ui
+    tag: "latest"
+  service:
+    port: 8080

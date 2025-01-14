@@ -34,9 +34,9 @@ dependencies:
     condition: db.enabled
   - name: challenge-operator
     version: 1.0.0
-    repository: file://charts/challenge-controller/challenge-operator
+    repository: file://charts/challenge-operator
     condition: challenge-operator.enabled
   - name: challenge-server
     version: 1.0.0
-    repository: file://charts/challenge-controller/challenge-server
+    repository: file://charts/challenge-server
     condition: challenge-server.enabled

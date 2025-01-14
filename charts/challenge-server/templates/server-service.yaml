@@ -9,5 +9,9 @@ spec:
       targetPort: {{ .Values.app.service.port }}
       protocol: TCP
       name: http
+      # Add nodePort if using NodePort service type
+      {{- if eq .Values.app.service.type "NodePort" }}
+      nodePort: {{ .Values.app.service.nodePort | default 30000 }}
+      {{- end }}
   selector:
     app: challenge-app

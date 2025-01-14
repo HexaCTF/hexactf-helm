@@ -7,13 +7,14 @@ operator:
   image:
     repository: hexactf/challenge-operator
     tag: "latest"
+    pullPolicy: IfNotPresent
   config:
     development: true
     metricsAddr: ":8081"
     logLevel: "debug"
   kubeconfig:
     enabled: true
-    mountPath: /home/nonroot/.kube/config
+    mountPath: /tmp/k/config
 
 kafka:
   service:
