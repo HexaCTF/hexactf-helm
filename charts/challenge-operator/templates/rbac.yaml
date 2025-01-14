@@ -7,10 +7,10 @@ metadata:
 rules:
 - apiGroups: [""]
   resources: ["services"]
-  verbs: ["get", "watch", "list"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 - apiGroups: ["apps"]
   resources: ["deployments"]
-  verbs: ["get", "watch", "list"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 - apiGroups: ["apps.hexactf.io"]
   resources: ["challenges",  "challenges/status"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
