@@ -1,0 +1,102 @@
+# values.yaml
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+  storageClass: ""
+  env: production
+
+# Kafka Configuration
+kafka:
+  enabled: true
+  zookeeper:
+    image:
+      repository: confluentinc/cp-zookeeper
+      tag: "7.0.0"
+    service:
+      port: 2181
+    config:
+      clientPort: 2181
+      tickTime: 2000
+
+  kafka:
+    image:
+      repository: confluentinc/cp-kafka
+      tag: "latest"
+    service:
+      internal:
+        port: 9092
+      external:
+        port: 9093
+    config:
+      brokerId: 1
+      autoCreateTopics: true
+      offsetsTopicReplicationFactor: 1
+
+  kafkaUI:
+    enabled: true
+    image:
+      repository: provectuslabs/kafka-ui
+      tag: "latest"
+    service:
+      port: 8080
+
+# Database Configuration
+db:
+  enabled: true
+  mariadb:
+    image:
+      repository: mariadb
+      tag: "10.6"
+    service:
+      port: 3306
+    auth:
+      rootPassword: root_password
+      database: challenge_db
+      username: challenge_user
+      password: challenge_password
+    persistence:
+      enabled: false
+      storageClass: ${global.storageClass}
+      size: 8Gi
+    config:
+      characterSet: utf8mb4
+      collation: utf8mb4_unicode_ci
+
+# Challenge Operator Configuration
+challenge-operator:
+  enabled: true
+  operator:
+    image:
+      repository: hexactf/challenge-operator
+      tag: "latest"
+    config:
+      development: false
+      metricsAddr: ":8081"
+      logLevel: "info"
+    kubeconfig:
+      enabled: true
+      mountPath: /home/nonroot/.kube/config
+
+# Challenge Server Configuration
+challenge-server:
+  enabled: true
+  server:
+    image:
+      repository: hexactf/challenge-api
+      tag: "latest"
+    replicaCount: 1
+    config:
+      flaskEnv: ${global.env}
+      secretKey: your-super-secret-key-here
+      kafka:
+        topic: challenge-status
+        groupId: challenge-consumer-group
+      db:
+        poolSize: 5
+        maxOverflow: 10
+    kubeconfig:
+      enabled: true
+      mountPath: /root/.kube/config
+    service:
+      type: ClusterIP
+      port: 8000

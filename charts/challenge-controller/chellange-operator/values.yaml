@@ -1,0 +1,21 @@
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+
+operator:
+  enabled: true
+  image:
+    repository: hexactf/challenge-operator
+    tag: "latest"
+  config:
+    development: true
+    metricsAddr: ":8081"
+    logLevel: "debug"
+  kubeconfig:
+    enabled: true
+    mountPath: /home/nonroot/.kube/config
+
+kafka:
+  service:
+    external:
+      port: 9093

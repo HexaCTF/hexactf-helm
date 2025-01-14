@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-kafka-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-ui
+  template:
+    metadata:
+      labels:
+        app: kafka-ui
+    spec:
+      containers:
+        - name: kafka-ui
+          image: {{ .Values.kafkaUI.image.repository }}:{{ .Values.kafkaUI.image.tag }}
+          ports:
+            - containerPort: {{ .Values.kafkaUI.service.port }}
+          env:
+            - name: KAFKA_CLUSTERS_0_NAME
+              value: "local"
+            - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
+              value: "{{ .Release.Name }}-kafka:{{ .Values.kafka.service.internal.port }}"
+            - name: KAFKA_CLUSTERS_0_ZOOKEEPER
+              value: "{{ .Release.Name }}-zookeeper:{{ .Values.zookeeper.service.port }}"

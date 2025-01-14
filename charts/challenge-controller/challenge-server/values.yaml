@@ -1,0 +1,37 @@
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+
+app:
+  enabled: true
+  image:
+    repository: hexactf/challenge-api
+    tag: "latest"
+  config:
+    flaskEnv: development
+    secretKey: your-super-secret-key-here
+    kafka:
+      topic: challenge-status
+      groupId: challenge-consumer-group
+    db:
+      poolSize: 5
+      maxOverflow: 10
+  kubeconfig:
+    enabled: true
+    mountPath: /root/.kube/config
+  service:
+    type: ClusterIP
+    port: 8000
+
+kafka:
+  service:
+    external:
+      port: 9093
+
+mariadb:
+  service:
+    port: 3306
+  auth:
+    database: challenge_db
+    username: challenge_user
+    password: challenge_password

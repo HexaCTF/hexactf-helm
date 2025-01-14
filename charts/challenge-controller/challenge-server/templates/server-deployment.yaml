@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: challenge-app
+  template:
+    metadata:
+      labels:
+        app: challenge-app
+    spec:
+      containers:
+        - name: app
+          image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
+          ports:
+            - containerPort: {{ .Values.app.service.port }}
+          env:
+            - name: FLASK_ENV
+              value: {{ .Values.app.config.flaskEnv }}
+            - name: DB_HOST
+              value: "{{ .Release.Name }}-db-mariadb"
+            - name: DB_PORT
+              value: {{ .Values.mariadb.service.port | quote }}
+            - name: DB_NAME
+              value: {{ .Values.mariadb.auth.database }}
+            - name: DB_USER
+              value: {{ .Values.mariadb.auth.username }}
+            - name: DB_PASSWORD
+              value: {{ .Values.mariadb.auth.password }}
+            - name: DB_POOL_SIZE
+              value: {{ .Values.app.config.db.poolSize | quote }}
+            - name: DB_MAX_OVERFLOW
+              value: {{ .Values.app.config.db.maxOverflow | quote }}
+            - name: SECRET_KEY
+              value: {{ .Values.app.config.secretKey }}
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "{{ .Release.Name }}-kafka-kafka:{{ .Values.kafka.service.external.port }}"
+            - name: KAFKA_TOPIC
+              value: {{ .Values.app.config.kafka.topic }}
+            - name: KAFKA_GROUP_ID
+              value: {{ .Values.app.config.kafka.groupId }}
+            - name: KUBECONFIG
+              value: {{ .Values.app.kubeconfig.mountPath }}
+          {{- if .Values.app.kubeconfig.enabled }}
+          volumeMounts:
+            - name: kubeconfig
+              mountPath: {{ .Values.app.kubeconfig.mountPath }}
+              readOnly: true
+      volumes:
+        - name: kubeconfig
+          hostPath:
+            path: ${HOME}/.kube/config
+          {{- end }}

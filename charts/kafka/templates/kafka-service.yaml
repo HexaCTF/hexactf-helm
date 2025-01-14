@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-kafka
+spec:
+  ports:
+    - name: internal
+      port: {{ .Values.kafka.service.internal.port }}
+      targetPort: {{ .Values.kafka.service.internal.port }}
+    - name: external
+      port: {{ .Values.kafka.service.external.port }}
+      targetPort: {{ .Values.kafka.service.external.port }}
+  selector:
+    app: kafka

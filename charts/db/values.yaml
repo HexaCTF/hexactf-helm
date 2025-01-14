@@ -1,0 +1,23 @@
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+
+mariadb:
+  enabled: true
+  image:
+    repository: mariadb
+    tag: "10.6"
+  service:
+    port: 3306
+  auth:
+    rootPassword: root_password
+    database: challenge_db
+    username: challenge_user
+    password: challenge_password
+  persistence:
+    enabled: true
+    storageClass: ""
+    size: 8Gi
+  config:
+    characterSet: utf8mb4
+    collation: utf8mb4_unicode_ci

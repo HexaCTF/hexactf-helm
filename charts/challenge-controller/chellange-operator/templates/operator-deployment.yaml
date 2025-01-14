@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: challenge-operator
+  template:
+    metadata:
+      labels:
+        app: challenge-operator
+    spec:
+      containers:
+        - name: operator
+          image: {{ .Values.operator.image.repository }}:{{ .Values.operator.image.tag }}
+          env:
+            - name: DEVELOPMENT
+              value: {{ .Values.operator.config.development | quote }}
+            - name: METRICS_ADDR
+              value: {{ .Values.operator.config.metricsAddr }}
+            - name: KAFKA_BROKERS
+              value: "{{ .Release.Name }}-kafka-kafka:{{ .Values.kafka.service.external.port }}"
+            - name: LOG_LEVEL
+              value: {{ .Values.operator.config.logLevel }}
+            - name: KUBECONFIG
+              value: {{ .Values.operator.kubeconfig.mountPath }}
+          {{- if .Values.operator.kubeconfig.enabled }}
+          volumeMounts:
+            - name: kubeconfig
+              mountPath: {{ .Values.operator.kubeconfig.mountPath }}
+              readOnly: true
+      volumes:
+        - name: kubeconfig
+          hostPath:
+            path: ${HOME}/.kube/config
+          {{- end }}
