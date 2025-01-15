@@ -26,6 +26,8 @@ app:
 
 kafka:
   service:
+    internal:
+      port: 9092
     external:
       port: 9093
 

@@ -40,7 +40,7 @@ spec:
             - name: SECRET_KEY
               value: {{ .Values.app.config.secretKey }}
             - name: KAFKA_BOOTSTRAP_SERVERS
-              value: "{{ .Release.Name }}-kafka:{{ .Values.kafka.service.external.port }}"
+              value: "{{ .Release.Name }}-kafka:{{ .Values.kafka.service.internal.port }}"
             - name: KAFKA_TOPIC
               value: {{ .Values.app.config.kafka.topic }}
             - name: KAFKA_GROUP_ID
