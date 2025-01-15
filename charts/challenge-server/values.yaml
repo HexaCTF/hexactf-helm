@@ -5,9 +5,9 @@ global:
 app:
   enabled: true
   image:
-    repository: hexactf/challenge-api
+    repository: 10.0.10.156:30002/hexactf/challenge-api
     tag: "latest"
-    pullPolicy: Never
+    pullPolicy: IfNotPresent
   config:
     flaskEnv: development
     secretKey: your-super-secret-key-here

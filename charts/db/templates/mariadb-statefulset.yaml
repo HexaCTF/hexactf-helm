@@ -1,10 +1,11 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ .Release.Name }}-mariadb
   annotations:
     "helm.sh/hook-weight": "-20"
 spec:
+  serviceName: {{ .Release.Name }}-mariadb
   replicas: 1
   selector:
     matchLabels:
@@ -34,7 +35,12 @@ spec:
           volumeMounts:
             - name: mariadb-data
               mountPath: /var/lib/mysql
-      volumes:
-        - name: mariadb-data
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-mariadb
+  volumeClaimTemplates:
+    - metadata:
+        name: mariadb-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: nfs-client
+        resources:
+          requests:
+            storage: 10Gi

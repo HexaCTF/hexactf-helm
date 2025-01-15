@@ -68,7 +68,7 @@ challenge-operator:
   enabled: true
   operator:
     image:
-      repository: hexactf/challenge-operator
+      repository: 10.0.10.156:30002/hexactf/challenge-operator
       tag: "latest"
     config:
       development: false
@@ -83,7 +83,7 @@ challenge-server:
   enabled: true
   server:
     image:
-      repository: hexactf/challenge-api
+      repository: 10.0.10.156:30002/hexactf/challenge-api
       tag: "latest"
     replicaCount: 1
     config:
