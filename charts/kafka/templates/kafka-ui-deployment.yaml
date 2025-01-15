@@ -12,6 +12,8 @@ spec:
       labels:
         app: kafka-ui
     spec:
+      nodeSelector:
+        hexactf/env: mgmt
       containers:
         - name: kafka-ui
           image: {{ .Values.kafkaUI.image.repository }}:{{ .Values.kafkaUI.image.tag }}
