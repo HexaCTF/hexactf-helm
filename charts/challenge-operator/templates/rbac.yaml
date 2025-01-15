@@ -30,7 +30,10 @@ subjects:
     namespace: {{ .Release.Namespace }}
   - kind: ServiceAccount
     name: default
-    namespace: default  # default ServiceAccount added
+    namespace: hexactf  # Changed from 'default' to 'hexactf'
+  - kind: ServiceAccount
+    name: default
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: {{ .Release.Name }}-operator-role
