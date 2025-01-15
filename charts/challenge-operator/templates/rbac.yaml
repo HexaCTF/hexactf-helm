@@ -5,18 +5,18 @@ metadata:
   labels:
     app: {{ .Release.Name }}-operator
 rules:
-- apiGroups: [""]
-  resources: ["services"]
-  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-- apiGroups: ["apps"]
-  resources: ["deployments"]
-  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-- apiGroups: ["apps.hexactf.io"]
-  resources: ["challenges", "challenges/status"]
-  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-- apiGroups: ["apps.hexactf.io"]
-  resources: ["challengedefinitions"]
-  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["apps.hexactf.io"]
+    resources: ["challenges", "challenges/status"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["apps.hexactf.io"]
+    resources: ["challengedefinitions"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -25,12 +25,12 @@ metadata:
   labels:
     app: {{ .Release.Name }}-operator
 subjects:
-- kind: ServiceAccount
-  name: {{ .Release.Name }}-operator
-  namespace: {{ .Release.Namespace }}
-- kind: ServiceAccount
-  name: default
-  namespace: default    # default ServiceAccount 추가
+  - kind: ServiceAccount
+    name: {{ .Release.Name }}-operator
+    namespace: {{ .Release.Namespace }}
+  - kind: ServiceAccount
+    name: default
+    namespace: default  # default ServiceAccount added
 roleRef:
   kind: ClusterRole
   name: {{ .Release.Name }}-operator-role
