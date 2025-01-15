@@ -7,7 +7,7 @@ app:
   image:
     repository: 10.0.10.156:30002/hexactf/challenge-api
     tag: "latest"
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
   config:
     flaskEnv: development
     secretKey: your-super-secret-key-here
