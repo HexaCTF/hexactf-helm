@@ -20,7 +20,7 @@ app:
     loki:
       enabled: true
       protocol: http
-      host: plg-loki
+      host: plg-loki.monitoring.svc.cluster.local
       port: 3100
       path: /loki/api/v1/push
       logLevel: info
