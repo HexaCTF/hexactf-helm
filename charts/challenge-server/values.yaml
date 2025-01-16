@@ -17,12 +17,23 @@ app:
     db:
       poolSize: 5
       maxOverflow: 10
+    loki:
+      enabled: true
+      protocol: http
+      host: plg-loki
+      port: 3100
+      path: /loki/api/v1/push
+      logLevel: info
+      app_name: challenge-api
+      environment: development      
   kubeconfig:
     enabled: true
     mountPath: /root/.kube
   service:
     type: NodePort
     port: 5001
+  
+
 
 kafka:
   service:

@@ -49,6 +49,20 @@ spec:
               value: {{ .Values.app.config.kafka.groupId }}
             - name: KUBECONFIG
               value: {{ .Values.app.kubeconfig.mountPath }}
+            {{- if .Values.app.config.loki.enabled }}
+            - name: LOKI_PROTOCOL
+              value: {{ .Values.app.config.loki.protocol }}
+            - name: LOKI_HOST
+              value: {{ .Values.app.config.loki.host }}
+            - name: LOKI_PORT
+              value: {{ .Values.app.config.loki.port | quote }}
+            - name: LOKI_PATH
+              value: {{ .Values.app.config.loki.path }}
+            - name: LOKI_LOG_LEVEL
+              value: {{ .Values.app.config.loki.logLevel }}
+            - name: LOKI_APP_NAME
+              value: {{ .Values.app.config.loki.app_name }}
+            {{- end }}
           {{- if .Values.app.kubeconfig.enabled }}
           volumeMounts:
             - name: kubeconfig
