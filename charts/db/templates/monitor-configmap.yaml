@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mariadb-exporter-config
+data:
+  .my.cnf: |
+    [client]
+    user=exporter
+    password=password
+    host=localhost
+    port=3306

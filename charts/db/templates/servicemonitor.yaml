@@ -1,0 +1,11 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mariadb-monitor
+spec:
+  selector:
+    matchLabels:
+      app: mariadb
+  endpoints:
+    - port: metrics
+      interval: 15s
