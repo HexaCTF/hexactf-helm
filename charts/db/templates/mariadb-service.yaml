@@ -9,6 +9,7 @@ spec:
       targetPort: {{ .Values.mariadb.service.port }}
     - name: metrics
       port: 9104
-      targetPort: metrics
+      targetPort: 9104
+      protocol: TCP
   selector:
     app: mariadb

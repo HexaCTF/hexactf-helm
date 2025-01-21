@@ -17,7 +17,7 @@ mariadb:
     password: challenge_password
   persistence:
     enabled: true
-    storageClass: ""
+    storageClass: "nfs-client"
     size: 8Gi
   config:
     characterSet: utf8mb4
