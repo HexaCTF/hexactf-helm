@@ -44,7 +44,7 @@ spec:
           name: metrics
         volumeMounts:
         - name: exporter-config
-          mountPath: /root/.my.cnf
+          mountPath: /home/.my.cnf    # 여기를 /root/.my.cnf에서 /home/.my.cnf로 변경
           subPath: .my.cnf
       volumes:
       - name: exporter-config
