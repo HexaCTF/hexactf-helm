@@ -13,5 +13,8 @@ spec:
     matchNames:
       - hexactf
   endpoints:
-    - port: metrics
+    - honorLabels: true
+      path: /metrics
+      port: metrics
+      scheme: http
       interval: 15s
