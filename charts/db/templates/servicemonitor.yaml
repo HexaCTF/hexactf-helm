@@ -2,13 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: mariadb-monitor
-  namespace: hexactf
-  labels:
-    release: prometheus
 spec:
-  namespaceSelector:
-    matchNames:
-      - hexactf
   selector:
     matchLabels:
       app: mariadb
