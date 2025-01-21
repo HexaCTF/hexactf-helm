@@ -4,7 +4,8 @@ metadata:
   name: {{ .Release.Name }}-mariadb
 spec:
   ports:
-    - port: {{ .Values.mariadb.service.port }}
+    - name: mariadb
+      port: {{ .Values.mariadb.service.port }}
       targetPort: {{ .Values.mariadb.service.port }}
     - name: metrics
       port: 9104
