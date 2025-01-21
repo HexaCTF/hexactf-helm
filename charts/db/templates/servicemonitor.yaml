@@ -12,5 +12,6 @@ spec:
     matchNames:
       - hexactf
   endpoints:
-    - interval: 30s
-      targetPort: 9104
+    - port: metrics
+      path: /metrics
+      interval: 30s
