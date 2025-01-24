@@ -20,6 +20,12 @@ spec:
       containers:
         - name: mariadb
           image: {{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}
+          command:
+          command:
+            - sh
+            - -c
+            - |
+              apt-get update && apt-get install -y mariadb-client
           ports:
             - containerPort: {{ .Values.mariadb.service.port }}
           env:
