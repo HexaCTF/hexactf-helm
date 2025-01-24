@@ -21,7 +21,8 @@ spec:
           image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.app.service.port }}
+            - name: mariadb-port
+              containerPort: {{ .Values.app.service.port }}
           resources:
             requests:
               memory: "64Mi"

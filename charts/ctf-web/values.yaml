@@ -5,7 +5,7 @@ app:
     pullPolicy: IfNotPresent
 
   service:
-    type: ClusterIP
+    type: NodePort
     port: 5000
     nodePort: 30100  # Use only if service type is NodePort
 
