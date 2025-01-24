@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ .Release.Name }}-mariadb
-  annotations:
-    "helm.sh/hook-weight": "-20"
 spec:
   serviceName: {{ .Release.Name }}-mariadb
   replicas: 1
@@ -15,13 +13,12 @@ spec:
       labels:
         app: mariadb
     spec:
-      nodeSelector:
-        hexactf/env: mgmt
       containers:
         - name: mariadb
           image: {{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}
           ports:
-            - containerPort: {{ .Values.mariadb.service.port }}
+            - name: db
+              containerPort: {{ .Values.mariadb.service.port }}
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: {{ .Values.mariadb.auth.rootPassword }}
@@ -37,22 +34,23 @@ spec:
           volumeMounts:
             - name: mariadb-data
               mountPath: /var/lib/mysql
+
+        {{- if .Values.mysqldExporter.enabled }}
         - name: mysqld-exporter
-          image: prom/mysqld-exporter:latest
+          image: {{ .Values.mysqldExporter.image.repository }}:{{ .Values.mysqldExporter.image.tag }}
           ports:
-            - containerPort: 9104
+            - name: metrics
+              containerPort: {{ .Values.mysqldExporter.service.port }}
           env:
             - name: DATA_SOURCE_NAME
-              value: "{{ .Values.mariadb.auth.username }}:{{ .Values.mariadb.auth.password }}@(localhost:{{ .Values.mariadb.service.port }})/"
-      volumes:
-        - name: mariadb-data
-          emptyDir: {}
+              value: "{{ .Values.mysqldExporter.config.user }}:{{ .Values.mysqldExporter.config.password }}@tcp({{ .Values.mysqldExporter.config.host }}:{{ .Values.mysqldExporter.config.port }})/"
+        {{- end }}
+
   volumeClaimTemplates:
     - metadata:
         name: mariadb-data
       spec:
         accessModes: ["ReadWriteOnce"]
-        storageClassName: nfs-client
         resources:
           requests:
             storage: 10Gi
