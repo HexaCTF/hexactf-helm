@@ -5,6 +5,7 @@ global:
 mariadb:
   enabled: true
   image: 
+    
     repository: 10.0.10.156:30002/hexactf/hexactf-db
     tag: "1.16.0"
     pullPolicy: IfNotPresent
@@ -22,16 +23,3 @@ mariadb:
   config:
     characterSet: utf8mb4
     collation: utf8mb4_unicode_ci
-
-mysqldExporter:
-  enabled: true
-  image:
-    repository: prom/mysqld-exporter
-    tag: v0.16.0
-  service:
-    port: 9104
-  config:
-    user: exporter
-    password: password
-    host: 127.0.0.1
-    port: 3306
