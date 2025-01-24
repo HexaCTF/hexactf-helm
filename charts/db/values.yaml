@@ -4,7 +4,7 @@ global:
 
 mariadb:
   enabled: true
-  image:
+  image: 
     repository: mariadb
     tag: "10.6"
     pullPolicy: IfNotPresent
