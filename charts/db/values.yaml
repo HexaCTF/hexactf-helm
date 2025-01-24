@@ -32,6 +32,6 @@ mysqldExporter:
     port: 9104
   config:
     user: exporter
-    password: exporter_password
+    password: password
     host: 127.0.0.1
     port: 3306
