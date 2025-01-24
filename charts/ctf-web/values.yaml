@@ -1,0 +1,25 @@
+app:
+  image:
+    repository: your-docker-repo/ctf-app
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 5000
+    nodePort: 30100  # Use only if service type is NodePort
+
+mariadb:
+  auth:
+    database: challenge_db
+    username: challenge_user
+    password: challenge_password
+
+  service:
+    port: 3306
+
+smtp:
+  server: smtp.gmail.com
+  port: 587
+  username: dsejong93@gmail.com
+  password: vjqt wzpy twel khpp

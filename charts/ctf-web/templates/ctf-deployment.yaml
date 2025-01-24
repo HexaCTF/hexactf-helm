@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app
+  annotations:
+    "helm.sh/hook-weight": "5"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ctf-app
+  template:
+    metadata:
+      labels:
+        app: ctf-app
+    spec:
+      nodeSelector:
+        hexactf/env: mgmt
+      containers:
+        - name: app
+          image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.app.service.port }}
+          env:
+            - name: DATABASE_URL
+              value: "mariadb+mariadbconnector://{{ .Values.mariadb.auth.username }}:{{ .Values.mariadb.auth.password }}@{{ .Release.Name }}-mariadb:{{ .Values.mariadb.service.port }}/{{ .Values.mariadb.auth.database }}"
+            - name : SMTP_SERVER
+              value: "{{ .Values.smtp.server }}"
+            - name : SMTP_PORT
+              value: "{{ .Values.smtp.port }}"
+            - name : SMTP_USERNAME
+              value: "{{ .Values.smtp.username }}"
+            - name : SMTP_PASSWORD
+              value: "{{ .Values.smtp.password }}"
