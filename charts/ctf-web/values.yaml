@@ -11,9 +11,9 @@ app:
 
 mariadb:
   auth:
-    database: challenge_db
-    username: challenge_user
-    password: challenge_password
+    database: CTF
+    username: user 
+    password: password
 
   service:
     port: 3306

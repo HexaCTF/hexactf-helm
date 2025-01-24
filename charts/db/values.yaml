@@ -13,9 +13,9 @@ mariadb:
     port: 3306
   auth:
     rootPassword: root_password
-    database: challenge_db
-    username: challenge_user
-    password: challenge_password
+    database: CTF
+    username: user
+    password: password
   persistence:
     enabled: true
     storageClass: "nfs-client"
