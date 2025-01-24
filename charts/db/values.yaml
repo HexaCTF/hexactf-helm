@@ -5,8 +5,8 @@ global:
 mariadb:
   enabled: true
   image: 
-    repository: mariadb
-    tag: "10.6"
+    repository: 10.0.10.156:30002/hexactf/hexactf-mariadb
+    tag: "latest"
     pullPolicy: IfNotPresent
   service:
     port: 3306
