@@ -5,8 +5,7 @@ global:
 mariadb:
   enabled: true
   image: 
-    # 10.0.10.156:30002/hexactf/hexactf-mariadb
-    repository: mariadb
+    repository: 10.0.10.156:30002/hexactf/hexactf-db
     tag: "1.16.0"
     pullPolicy: IfNotPresent
   service:
