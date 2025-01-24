@@ -37,7 +37,7 @@ spec:
               value: "{{ .Values.smtp.server }}"
             - name : SMTP_PORT
               value: "{{ .Values.smtp.port }}"
-            - name : SMTP_USERNAME
+            - name : GMAIL_USERNAME
               value: "{{ .Values.smtp.username }}"
-            - name : SMTP_PASSWORD
+            - name : GMAIL_PASSWORD
               value: "{{ .Values.smtp.password }}"
