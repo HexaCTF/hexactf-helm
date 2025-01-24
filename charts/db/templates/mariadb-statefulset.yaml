@@ -37,6 +37,16 @@ spec:
           volumeMounts:
             - name: mariadb-data
               mountPath: /var/lib/mysql
+        - name: mysqld-exporter
+          image: prom/mysqld-exporter:latest
+          ports:
+            - containerPort: 9104
+          env:
+            - name: DATA_SOURCE_NAME
+              value: "{{ .Values.mariadb.auth.username }}:{{ .Values.mariadb.auth.password }}@(localhost:{{ .Values.mariadb.service.port }})/"
+      volumes:
+        - name: mariadb-data
+          emptyDir: {}
   volumeClaimTemplates:
     - metadata:
         name: mariadb-data
