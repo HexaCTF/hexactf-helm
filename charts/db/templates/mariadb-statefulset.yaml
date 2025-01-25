@@ -40,13 +40,6 @@ spec:
             - name: mariadb-config
               mountPath: /etc/mysql/conf.d  # Mount custom config file here
               subPath: my.cnf  # Use the my.cnf file from the ConfigMap
-          resources:
-            requests:
-              memory: "1Gi"
-              cpu: "500m"
-            limits:
-              memory: "2Gi"
-              cpu: "1"
   volumeClaimTemplates:
     - metadata:
         name: mariadb-data
