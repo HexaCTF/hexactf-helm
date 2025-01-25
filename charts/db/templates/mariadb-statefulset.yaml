@@ -37,13 +37,7 @@ spec:
           volumeMounts:
             - name: mariadb-data
               mountPath: /var/lib/mysql
-            - name: mariadb-config
-              mountPath: /etc/mysql/conf.d  # Mount custom config file here
-              subPath: my.cnf  # Use the my.cnf file from the ConfigMap
-      volumes:
-        - name: mariadb-config
-          configMap:
-            name: mariadb-config  # Reference the ConfigMap with the custom my.cnf
+             
   volumeClaimTemplates:
     - metadata:
         name: mariadb-data
