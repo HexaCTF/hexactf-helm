@@ -49,3 +49,8 @@ spec:
         resources:
           requests:
             storage: 10Gi
+  
+  volumes:
+    - name: mariadb-config
+      configMap:
+        name: mariadb-config 
