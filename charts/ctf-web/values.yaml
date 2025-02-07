@@ -2,7 +2,7 @@ app:
   image:
     repository: 10.0.10.156:30002/hexactf/ctf-web
     tag: latest
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
 
   service:
     type: NodePort

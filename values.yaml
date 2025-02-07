@@ -4,7 +4,7 @@ global:
   imagePullSecrets: []
   storageClass: ""
   env: production
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
 
 # Kafka Configuration
 kafka:
