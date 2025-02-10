@@ -59,6 +59,10 @@ spec:
                 secretKeyRef:
                   name: mariadb-secret
                   key: DATA_SOURCE_PASSWORD
+          volumeMounts:
+          - name: mariadb-config
+            mountPath: /etc/mysql/conf.d/my.cnf
+            subPath: my.cnf
              
   volumeClaimTemplates:
     - metadata:
