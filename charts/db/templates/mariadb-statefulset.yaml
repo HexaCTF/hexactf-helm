@@ -20,13 +20,19 @@ spec:
       volumes:
         - name: mariadb-config
           configMap:
-            name: mariadb-config  # 💡 ConfigMap에서 MariaDB 설정 파일 불러오기
-
+            name: mariadb-config  # 📌 MariaDB 설정 ConfigMap
       containers:
         - name: mariadb
           image: {{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}
           ports:
             - containerPort: {{ .Values.mariadb.service.port }}
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "1"
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: {{ .Values.mariadb.auth.rootPassword }}
@@ -37,11 +43,11 @@ spec:
             - name: MYSQL_PASSWORD
               value: {{ .Values.mariadb.auth.password }}
           args:
-            - "--defaults-file=/etc/mysql/conf.d/my.cnf"  # 💡 MariaDB의 기본 설정 파일 위치로 변경
+            - "--defaults-file=/etc/mysql/conf.d/my.cnf"  # 📌 ConfigMap 적용
           volumeMounts:
             - name: mariadb-config
-              mountPath: /etc/mysql/conf.d/my.cnf  # 💡 `conf.d` 경로에 마운트하여 적용
-              subPath: my.cnf  
+              mountPath: /etc/mysql/conf.d/my.cnf  # 📌 ConfigMap을 설정파일로 마운트
+              subPath: my.cnf
             - name: mariadb-data
               mountPath: /var/lib/mysql
 
@@ -60,6 +66,10 @@ spec:
                 secretKeyRef:
                   name: mariadb-secret
                   key: DATA_SOURCE_PASSWORD
+          volumeMounts:
+            - name: mariadb-config
+              mountPath: /etc/mysql/conf.d/my.cnf  # 📌 MariaDB와 동일한 설정 적용
+              subPath: my.cnf
 
   volumeClaimTemplates:
     - metadata:

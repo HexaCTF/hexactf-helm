@@ -15,3 +15,5 @@ data:
     long_query_time = 2
     general_log = 1
     general_log_file = /var/log/mysql/general.log
+    wait_timeout = 28800
+    interactive_timeout = 28800
