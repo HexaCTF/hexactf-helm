@@ -42,6 +42,8 @@ spec:
           args:
             - --character-set-server={{ .Values.mariadb.config.characterSet }}
             - --collation-server={{ .Values.mariadb.config.collation }}
+            - "--mysqld.username=exporter:exporter-password"
+            - "--mysqld.address=localhost:3306"
           volumeMounts:
             - name: mariadb-data
               mountPath: /var/lib/mysql
@@ -49,9 +51,6 @@ spec:
           image: prom/mysqld-exporter:latest
           ports:
             - containerPort: 9104
-          env:
-            - name: DATA_SOURCE_NAME
-              value: "exporter:exporter-password@(localhost:3306)/"
   volumeClaimTemplates:
     - metadata:
         name: mariadb-data
