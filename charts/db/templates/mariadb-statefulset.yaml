@@ -20,7 +20,6 @@ spec:
       containers:
         - name: mariadb
           image: {{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}
-          command: ["/usr/bin/mariadbd"]
           ports:
             - containerPort: {{ .Values.mariadb.service.port }}
           resources:
@@ -39,6 +38,9 @@ spec:
               value: {{ .Values.mariadb.auth.username }}
             - name: MYSQL_PASSWORD
               value: {{ .Values.mariadb.auth.password }}
+          args:
+            - --character-set-server={{ .Values.mariadb.config.characterSet }}
+            - --collation-server={{ .Values.mariadb.config.collation }}
           volumeMounts:
             - name: mariadb-data
               mountPath: /var/lib/mysql
