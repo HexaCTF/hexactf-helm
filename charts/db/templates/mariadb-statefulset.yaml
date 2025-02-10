@@ -17,18 +17,16 @@ spec:
     spec:
       nodeSelector:
         hexactf/env: mgmt
+      volumes:
+        - name: mariadb-config
+          configMap:
+            name: mariadb-config  # 💡 위에서 생성한 ConfigMap 사용
+
       containers:
         - name: mariadb
           image: {{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}
           ports:
             - containerPort: {{ .Values.mariadb.service.port }}
-          resources:
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
-            limits:
-              memory: "512Mi"
-              cpu: "1"
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: {{ .Values.mariadb.auth.rootPassword }}
@@ -39,11 +37,14 @@ spec:
             - name: MYSQL_PASSWORD
               value: {{ .Values.mariadb.auth.password }}
           args:
-            - --character-set-server={{ .Values.mariadb.config.characterSet }}
-            - --collation-server={{ .Values.mariadb.config.collation }}
+            - --defaults-extra-file=/etc/mysql/my.cnf  # 💡 ConfigMap을 직접 사용
           volumeMounts:
+            - name: mariadb-config
+              mountPath: /etc/mysql/my.cnf
+              subPath: my.cnf  # 💡 ConfigMap의 `my.cnf` 키를 MariaDB 설정으로 사용
             - name: mariadb-data
               mountPath: /var/lib/mysql
+
         - name: mysqld-exporter
           image: prom/mysqld-exporter:latest
           ports:
@@ -59,6 +60,7 @@ spec:
                 secretKeyRef:
                   name: mariadb-secret
                   key: password
+
   volumeClaimTemplates:
     - metadata:
         name: mariadb-data
