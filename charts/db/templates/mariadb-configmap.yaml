@@ -5,9 +5,7 @@ metadata:
   namespace: hexactf
 data:
   my.cnf: |
-    [mysqld]
-    bind-address = 0.0.0.0
-
     [client]
     user=exporter
     password=exporter-password
+    host={{ .Release.Name }}-mariadb
