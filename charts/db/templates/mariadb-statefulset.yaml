@@ -51,15 +51,7 @@ spec:
             - containerPort: 9104
           env:
             - name: DATA_SOURCE_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: mariadb-secret
-                  key: DATA_SOURCE_NAME
-            - name: DATA_SOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mariadb-secret
-                  key: DATA_SOURCE_PASSWORD
+              value: "exporter:exporter-password@(localhost:3306)/"
   volumeClaimTemplates:
     - metadata:
         name: mariadb-data
