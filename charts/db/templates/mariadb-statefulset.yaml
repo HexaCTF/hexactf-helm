@@ -60,6 +60,8 @@ spec:
                 secretKeyRef:
                   name: mariadb-secret
                   key: password
+            - name: DATA_SOURCE_NAME
+              value: "exporter:exporter-password@(127.0.0.1:3306)/"
 
   volumeClaimTemplates:
     - metadata:
