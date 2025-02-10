@@ -50,8 +50,15 @@ spec:
             - containerPort: 9104
           env:
             - name: DATA_SOURCE_NAME
-              value: "{{ .Values.mariadb.auth.username }}:{{ .Values.mariadb.auth.password }}@(localhost:3306)/"    
-             
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: username
+            - name: DATA_SOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: password
   volumeClaimTemplates:
     - metadata:
         name: mariadb-data
