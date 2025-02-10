@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mysqld-exporter
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: mariadb
+  namespaceSelector:
+    matchNames:
+      - hexactf
+  endpoints:
+    - port: metrics
+      interval: 30s
