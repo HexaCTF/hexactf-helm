@@ -42,8 +42,6 @@ spec:
               value: {{ .Values.mariadb.auth.username }}
             - name: MYSQL_PASSWORD
               value: {{ .Values.mariadb.auth.password }}
-          args:
-            - "--defaults-file=/etc/mysql/conf.d/my.cnf"  # 📌 ConfigMap 적용
           volumeMounts:
             - name: mariadb-config
               mountPath: /etc/mysql/conf.d/my.cnf  # 📌 ConfigMap을 설정파일로 마운트
