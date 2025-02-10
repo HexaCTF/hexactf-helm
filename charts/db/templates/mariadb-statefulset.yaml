@@ -64,10 +64,10 @@ spec:
                 secretKeyRef:
                   name: mariadb-secret
                   key: DATA_SOURCE_PASSWORD
-          volumeMounts:
-            - name: mariadb-config
-              mountPath: /etc/mysql/conf.d/my.cnf  # 📌 MariaDB와 동일한 설정 적용
-              subPath: my.cnf
+          # volumeMounts:
+          #   - name: mariadb-config
+          #     mountPath: /etc/mysql/conf.d/my.cnf  # 📌 MariaDB와 동일한 설정 적용
+          #     subPath: my.cnf
 
   volumeClaimTemplates:
     - metadata:
