@@ -20,7 +20,7 @@ spec:
       containers:
         - name: mariadb
           image: {{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}
-          command: ["/usr/bin/mariadbd"]  # 명시적으로 mariadbd 실행
+          command: ["/usr/bin/mariadbd"]
           ports:
             - containerPort: {{ .Values.mariadb.service.port }}
           resources:
@@ -62,9 +62,13 @@ spec:
                   key: DATA_SOURCE_PASSWORD
           volumeMounts:
             - name: mariadb-config
-              mountPath: /etc/mysql/conf.d
+              mountPath: /etc/mysql/conf.d/my.cnf
               subPath: my.cnf
-             
+
+      volumes:
+        - name: mariadb-config
+          configMap:
+            name: mariadb-config
   volumeClaimTemplates:
     - metadata:
         name: mariadb-data
