@@ -19,11 +19,11 @@ spec:
             - containerPort: 9104
           env:
             - name: DATA_SOURCE_NAME
-              value: "exporter:exporter-password@({{ .Release.Name }}-mariadb:3306)/"
-          volumeMounts:
-            - name: mysqld-exporter-config
-              mountPath: /etc/mysql/conf.d
-      volumes:
-        - name: mysqld-exporter-config
-          configMap:
-            name: mysqld-exporter-config
+              value: "exporter:exporter-password@tcp({{ .Release.Name }}-mariadb:3306)/"
+    #       volumeMounts:
+    #         - name: mysqld-exporter-config
+    #           mountPath: /etc/mysql/conf.d
+    #   volumes:
+    #     - name: mysqld-exporter-config
+    #       configMap:
+    #         name: mysqld-exporter-config
