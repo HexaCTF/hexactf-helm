@@ -43,7 +43,7 @@ spec:
             - --character-set-server={{ .Values.mariadb.config.characterSet }}
             - --collation-server={{ .Values.mariadb.config.collation }}
             - "--mysqld.username=exporter:exporter-password"
-            - "--mysqld.address=localhost:3306"
+            - "--mysqld.address=127.0.0.1:3306"
           volumeMounts:
             - name: mariadb-data
               mountPath: /var/lib/mysql
