@@ -20,7 +20,7 @@ spec:
       volumes:
         - name: mariadb-config
           configMap:
-            name: mariadb-config  # 💡 위에서 생성한 ConfigMap 사용
+            name: mariadb-config  # 💡 ConfigMap에서 MariaDB 설정 파일 불러오기
 
       containers:
         - name: mariadb
@@ -37,11 +37,11 @@ spec:
             - name: MYSQL_PASSWORD
               value: {{ .Values.mariadb.auth.password }}
           args:
-            - --defaults-extra-file=/etc/mysql/my.cnf  # 💡 ConfigMap을 직접 사용
+            - "--defaults-file=/etc/mysql/conf.d/my.cnf"  # 💡 MariaDB의 기본 설정 파일 위치로 변경
           volumeMounts:
             - name: mariadb-config
-              mountPath: /etc/mysql/my.cnf
-              subPath: my.cnf  # 💡 ConfigMap의 `my.cnf` 키를 MariaDB 설정으로 사용
+              mountPath: /etc/mysql/conf.d/my.cnf  # 💡 `conf.d` 경로에 마운트하여 적용
+              subPath: my.cnf  
             - name: mariadb-data
               mountPath: /var/lib/mysql
 
@@ -54,14 +54,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: mariadb-secret
-                  key: username
+                  key: DATA_SOURCE_NAME
             - name: DATA_SOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mariadb-secret
-                  key: password
-            - name: DATA_SOURCE_NAME
-              value: "exporter:exporter-password@(127.0.0.1:3306)/"
+                  key: DATA_SOURCE_PASSWORD
 
   volumeClaimTemplates:
     - metadata:
