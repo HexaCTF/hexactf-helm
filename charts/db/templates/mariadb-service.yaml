@@ -12,6 +12,3 @@ spec:
     - name: mariadb-port
       port: {{ .Values.mariadb.service.port }}
       targetPort: {{ .Values.mariadb.service.port }}
-    - name: metrics
-      port: 9104
-      targetPort: 9104

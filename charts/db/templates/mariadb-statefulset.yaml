@@ -39,18 +39,9 @@ spec:
               value: {{ .Values.mariadb.auth.username }}
             - name: MYSQL_PASSWORD
               value: {{ .Values.mariadb.auth.password }}
-          args:
-            - --character-set-server={{ .Values.mariadb.config.characterSet }}
-            - --collation-server={{ .Values.mariadb.config.collation }}
-            - "--mysqld.username=exporter:exporter-password"
-            - "--mysqld.address=127.0.0.1:3306"
           volumeMounts:
             - name: mariadb-data
               mountPath: /var/lib/mysql
-        - name: mysqld-exporter
-          image: prom/mysqld-exporter:latest
-          ports:
-            - containerPort: 9104
   volumeClaimTemplates:
     - metadata:
         name: mariadb-data
