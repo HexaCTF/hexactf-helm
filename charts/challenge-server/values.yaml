@@ -40,4 +40,4 @@ mariadb:
     password: password
 
 loki:
-  host: http://loki.monitoring.svc.cluster.local:3100
+  host: http://loki.monitoring.svc.cluster.local
