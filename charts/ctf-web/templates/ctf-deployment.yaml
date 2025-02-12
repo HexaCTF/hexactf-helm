@@ -25,10 +25,10 @@ spec:
               containerPort: {{ .Values.app.service.port }}
           resources:
             requests:
-              memory: "64Mi"
+              memory: "256Mi"
               cpu: "250m"
             limits:
-              memory: "128Mi"
+              memory: "512Mi"
               cpu: "500m"
           env:
             - name: DATABASE_URL
@@ -37,7 +37,7 @@ spec:
               value: "{{ .Values.smtp.server }}"
             - name : SMTP_PORT
               value: "{{ .Values.smtp.port }}"
-            - name : SMTP_USERNAME
+            - name : GMAIL_USERNAME
               value: "{{ .Values.smtp.username }}"
-            - name : SMTP_PASSWORD
+            - name : GMAIL_PASSWORD
               value: "{{ .Values.smtp.password }}"

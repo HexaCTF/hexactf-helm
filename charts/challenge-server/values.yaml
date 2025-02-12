@@ -38,3 +38,6 @@ mariadb:
     database: CTF
     username: user
     password: password
+
+loki:
+  host: loki.monitoring.svc.cluster.local

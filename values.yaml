@@ -4,7 +4,7 @@ global:
   imagePullSecrets: []
   storageClass: ""
   env: production
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
 
 # Kafka Configuration
 kafka:
@@ -64,19 +64,19 @@ db:
       collation: utf8mb4_unicode_ci
 
 # Challenge Operator Configuration
-challenge-operator:
-  enabled: true
-  operator:
-    image:
-      repository: 10.0.10.156:30002/hexactf/challenge-operator
-      tag: "latest"
-    config:
-      development: false
-      metricsAddr: ":8081"
-      logLevel: "info"
-    kubeconfig:
-      enabled: true
-      mountPath: /home/nonroot/.kube
+# challenge-operator:
+#   enabled: true
+#   operator:
+#     image:
+#       repository: 10.0.10.156:30002/hexactf/challenge-operator
+#       tag: "latest"
+#     config:
+#       development: false
+#       metricsAddr: ":8081"
+#       logLevel: "info"
+#     kubeconfig:
+#       enabled: true
+#       mountPath: /home/nonroot/.kube
 
 # Challenge Server Configuration
 challenge-server:

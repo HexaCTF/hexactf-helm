@@ -32,10 +32,10 @@ dependencies:
     version: 1.0.0
     repository: file://charts/db
     condition: db.enabled
-  - name: challenge-operator
-    version: 1.0.0
-    repository: file://charts/challenge-operator
-    condition: challenge-operator.enabled
+  # - name: challenge-operator
+  #   version: 1.0.0
+  #   repository: file://charts/challenge-operator
+  #   condition: challenge-operator.enabled
   - name: challenge-server
     version: 1.0.0
     repository: file://charts/challenge-server
