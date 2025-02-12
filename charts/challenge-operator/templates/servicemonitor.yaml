@@ -1,0 +1,22 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .Release.Name }}-operator-monitor
+  namespace: monitoring  # Must be in the same namespace as Prometheus Operator
+  labels:
+    release: prometheus  # Ensure this matches your Prometheus selector
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: challenge-operator
+      app.kubernetes.io/component: metrics
+  namespaceSelector:
+    matchNames:
+      - hexactf
+      - default  # Operator is running in this namespace
+  endpoints:
+    - port: operator-metrics
+      interval: 15s
+      scrapeTimeout: 10s
+      path: /metrics  # Default path for operator metrics
+      scheme: http  # Since you are using HTTP only
