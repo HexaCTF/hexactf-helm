@@ -49,6 +49,8 @@ spec:
               value: {{ .Values.app.config.kafka.groupId }}
             - name: KUBECONFIG
               value: {{ .Values.app.kubeconfig.mountPath }}
+            - name: LOKI_HOST
+              value: {{ .Values.loki.host }}
           {{- if .Values.app.kubeconfig.enabled }}
           volumeMounts:
             - name: kubeconfig
