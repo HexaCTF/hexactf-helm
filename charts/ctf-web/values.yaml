@@ -23,3 +23,7 @@ smtp:
   port: 587
   username: dsejong93@gmail.com
   password: vjqt wzpy twel khpp
+
+nfs:
+  storageClassName: "nfs-client" 
+  storageSize: "20Gi"

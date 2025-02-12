@@ -41,3 +41,22 @@ spec:
               value: "{{ .Values.smtp.username }}"
             - name : SMTP_PASSWORD
               value: "{{ .Values.smtp.password }}"
+          volumeMounts:
+            - name: nfs-storage
+              mountPath: /app/CTF/admin/uploads
+      volumes:
+        - name: nfs-storage
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-nfs-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-nfs-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.nfs.storageSize }}
+  storageClassName: {{ .Values.nfs.storageClassName }}
