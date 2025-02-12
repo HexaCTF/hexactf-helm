@@ -35,4 +35,4 @@ kafkaUI:
     repository: provectuslabs/kafka-ui
     tag: "latest"
   service:
-    port: 8080
+    port: 8081
