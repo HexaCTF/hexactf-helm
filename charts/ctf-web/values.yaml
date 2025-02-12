@@ -1,0 +1,25 @@
+app:
+  image:
+    repository: 10.0.10.156:30002/hexactf/ctf-web
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  service:
+    type: NodePort
+    port: 5000
+    nodePort: 30100  # Use only if service type is NodePort
+
+mariadb:
+  auth:
+    database: CTF
+    username: user 
+    password: password
+
+  service:
+    port: 3306
+
+smtp:
+  server: smtp.gmail.com
+  port: 587
+  username: dsejong93@gmail.com
+  password: vjqt wzpy twel khpp

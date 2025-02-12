@@ -33,13 +33,6 @@ spec:
             - name: KUBECONFIG
               value: {{ .Values.operator.kubeconfig.mountPath }}/config
           {{- if .Values.operator.kubeconfig.enabled }}
-          resurces:
-            requests:
-              memory: "16Mi"
-              cpu: "50m"
-            limits:
-              memory: "32Mi"
-              cpu: "200m"
           volumeMounts:
             - name: kubeconfig
               mountPath: {{ .Values.operator.kubeconfig.mountPath }}

@@ -18,44 +18,31 @@ spec:
       nodeSelector:
         hexactf/env: mgmt
       containers:
-      - name: mariadb
-        image: {{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}
-        ports:
-        - containerPort: {{ .Values.mariadb.service.port }}
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: {{ .Values.mariadb.auth.rootPassword }}
-        - name: MYSQL_DATABASE
-          value: {{ .Values.mariadb.auth.database }}
-        - name: MYSQL_USER
-          value: {{ .Values.mariadb.auth.username }}
-        - name: MYSQL_PASSWORD
-          value: {{ .Values.mariadb.auth.password }}
-        args:
-        - --character-set-server={{ .Values.mariadb.config.characterSet }}
-        - --collation-server={{ .Values.mariadb.config.collation }}
-        volumeMounts:
-        - name: mariadb-data
-          mountPath: /var/lib/mysql
-      - name: metrics-exporter
-        image: prom/mysqld-exporter:v0.14.0
-        ports:
-        - containerPort: 9104
-          name: metrics
-        volumeMounts:
-        - name: exporter-config
-          mountPath: /home/.my.cnf   
-          subPath: .my.cnf
-      volumes:
-      - name: exporter-config
-        configMap:
-          name: mariadb-exporter-config
+        - name: mariadb
+          image: {{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}
+          ports:
+            - containerPort: {{ .Values.mariadb.service.port }}
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: {{ .Values.mariadb.auth.rootPassword }}
+            - name: MYSQL_DATABASE
+              value: {{ .Values.mariadb.auth.database }}
+            - name: MYSQL_USER
+              value: {{ .Values.mariadb.auth.username }}
+            - name: MYSQL_PASSWORD
+              value: {{ .Values.mariadb.auth.password }}
+          args:
+            - --character-set-server={{ .Values.mariadb.config.characterSet }}
+            - --collation-server={{ .Values.mariadb.config.collation }}
+          volumeMounts:
+            - name: mariadb-data
+              mountPath: /var/lib/mysql
   volumeClaimTemplates:
-  - metadata:
-      name: mariadb-data
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      storageClassName: nfs-client
-      resources:
-        requests:
-          storage: 10Gi
+    - metadata:
+        name: mariadb-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: nfs-client
+        resources:
+          requests:
+            storage: 10Gi
