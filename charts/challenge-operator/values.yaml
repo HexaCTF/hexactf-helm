@@ -22,3 +22,6 @@ kafka:
       port: 9092
     external:
       port: 9093
+
+loki:
+  host: http://loki.monitoring.svc.cluster.local:3100

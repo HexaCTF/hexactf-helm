@@ -25,11 +25,11 @@ spec:
               containerPort: {{ .Values.app.service.port }}
           resources:
             requests:
-              memory: "64Mi"
-              cpu: "250m"
-            limits:
-              memory: "128Mi"
+              memory: "256Mi"
               cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
           env:
             - name: DATABASE_URL
               value: "mariadb+mariadbconnector://{{ .Values.mariadb.auth.username }}:{{ .Values.mariadb.auth.password }}@{{ .Release.Name }}-mariadb:{{ .Values.mariadb.service.port }}/{{ .Values.mariadb.auth.database }}"
