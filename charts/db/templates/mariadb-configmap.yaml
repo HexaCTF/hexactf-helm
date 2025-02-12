@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mariadb-config
+  namespace: hexactf
+data:
+  my.cnf: |
+    [client]
+    user=exporter
+    password=exporter-password
+    host={{ .Release.Name }}-mariadb
