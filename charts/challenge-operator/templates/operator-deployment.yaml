@@ -21,6 +21,8 @@ spec:
         - name: operator
           image: {{ .Values.operator.image.repository }}:{{ .Values.operator.image.tag }}
           imagePullPolicy: {{ .Values.operator.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
           env:
             - name: DEVELOPMENT
               value: {{ .Values.operator.config.development | quote }}
