@@ -23,6 +23,11 @@ spec:
           imagePullPolicy: {{ .Values.operator.image.pullPolicy }}
           ports:
             - containerPort: 8080
+          # Add the args section here
+          args:
+            # Use --metrics-bind-address and substitute the environment variable METRICS_ADDR
+            - "--metrics-bind-address=:8080"
+
           env:
             - name: DEVELOPMENT
               value: {{ .Values.operator.config.development | quote }}
@@ -34,13 +39,17 @@ spec:
               value: {{ .Values.operator.config.logLevel }}
             - name: KUBECONFIG
               value: {{ .Values.operator.kubeconfig.mountPath }}/config
+
           {{- if .Values.operator.kubeconfig.enabled }}
           volumeMounts:
             - name: kubeconfig
               mountPath: {{ .Values.operator.kubeconfig.mountPath }}
               readOnly: true
+          {{- end }}
+
       volumes:
+        {{- if .Values.operator.kubeconfig.enabled }}
         - name: kubeconfig
           hostPath:
             path: /tmp/k/config
-          {{- end }}
+        {{- end }}
