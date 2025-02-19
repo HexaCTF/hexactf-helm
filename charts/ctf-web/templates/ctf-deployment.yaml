@@ -1,10 +1,11 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ .Release.Name }}-ctf-app
   annotations:
     "helm.sh/hook-weight": "5"
 spec:
+  serviceName: "{{ .Release.Name }}-ctf-app"
   replicas: 1
   selector:
     matchLabels:
@@ -44,13 +45,12 @@ spec:
           volumeMounts:
             - name: nfs-storage
               mountPath: /app/CTF/admin/uploads
-      volumes:
-        - name: nfs-storage
-          ephemeral:
-            volumeClaimTemplate:
-              spec:
-                accessModes: ["ReadWriteMany"]
-                resources:
-                  requests:
-                    storage: {{ .Values.nfs.storageSize }}
-                storageClassName: {{ .Values.nfs.storageClassName }}
+  volumeClaimTemplates:
+    - metadata:
+        name: nfs-storage
+      spec:
+        accessModes: ["ReadWriteMany"]
+        resources:
+          requests:
+            storage: {{ .Values.nfs.storageSize }}
+        storageClassName: {{ .Values.nfs.storageClassName }}

@@ -3,15 +3,12 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-ctf-app
 spec:
-  type: {{ .Values.app.service.type }}
+  type: NodePort
   ports:
     - port: {{ .Values.app.service.port }}
       targetPort: {{ .Values.app.service.port }}
       protocol: TCP
       name: http-ctf-app
-      # Add nodePort if using NodePort service type
-      {{- if eq .Values.app.service.type "NodePort" }}
       nodePort: {{ .Values.app.service.nodePort | default 30001 }}
-      {{- end }}
   selector:
     app: ctf-app
