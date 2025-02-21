@@ -6,7 +6,7 @@ metadata:
     "helm.sh/hook-weight": "5"
 spec:
   serviceName: "{{ .Release.Name }}-ctf-app"
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: ctf-app
