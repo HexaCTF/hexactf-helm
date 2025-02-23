@@ -37,17 +37,17 @@ spec:
           volumeMounts:
             - name: mariadb-data
               mountPath: /var/lib/mysql
-        - name: mysqld-exporter
-          image: prom/mysqld-exporter:latest
-          ports:
-            - containerPort: 9104
-          args:
-            - "--mysqld.username=root"
-            - "--mysqld.password={{ .Values.mariadb.auth.rootPassword }}"
-            - "--mysqld.address={{ .Release.Name }}-mariadb:3306"
-          env:
-            - name: DATA_SOURCE_NAME
-              value: "root:{{ .Values.mariadb.auth.rootPassword }}@tcp({{ .Release.Name }}-mariadb:3306)/"
+        # - name: mysqld-exporter
+        #   image: prom/mysqld-exporter:latest
+        #   ports:
+        #     - containerPort: 9104
+        #   args:
+        #     - "--mysqld.username=root"
+        #     - "--mysqld.password={{ .Values.mariadb.auth.rootPassword }}"
+        #     - "--mysqld.address={{ .Release.Name }}-mariadb:3306"
+        #   env:
+        #     - name: DATA_SOURCE_NAME
+        #       value: "root:{{ .Values.mariadb.auth.rootPassword }}@tcp({{ .Release.Name }}-mariadb:3306)/"
 
   volumeClaimTemplates:
     - metadata:

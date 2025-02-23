@@ -7,8 +7,8 @@ spec:
     - name: mariadb-port
       port: {{ .Values.mariadb.service.port }}
       targetPort: {{ .Values.mariadb.service.port }}
-    - name: mariadb-metrics
-      port: 9104
-      targetPort: 9104
+    # - name: mariadb-metrics
+    #   port: 9104
+    #   targetPort: 9104
   selector:
     app: mariadb
