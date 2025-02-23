@@ -41,6 +41,9 @@ spec:
           image: prom/mysqld-exporter:latest
           ports:
             - containerPort: 9104
+          args:
+            - "--mysqld.username=root:{{ .Values.mariadb.auth.rootPassword }}"
+            - "--mysqld.address=localhost:3306"
           env:
             - name: DATA_SOURCE_NAME
               value: "root:{{ .Values.mariadb.auth.rootPassword }}@tcp({{ .Release.Name }}-mariadb:3306)/"
