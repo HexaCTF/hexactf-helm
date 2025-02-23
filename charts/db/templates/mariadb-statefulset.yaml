@@ -43,7 +43,7 @@ spec:
             - containerPort: 9104
           env:
             - name: DATA_SOURCE_NAME
-              value: "root:{{ .Values.mariadb.auth.rootPassword }}@(localhost:3306)/"
+              value: "root:{{ .Values.mariadb.auth.rootPassword }}@tcp({{ .Release.Name }}-mariadb:3306)/"
 
   volumeClaimTemplates:
     - metadata:
