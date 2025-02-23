@@ -42,8 +42,9 @@ spec:
           ports:
             - containerPort: 9104
           args:
-            - "--mysqld.username=root:{{ .Values.mariadb.auth.rootPassword }}"
-            - "--mysqld.address=localhost:3306"
+            - "--mysqld.username=root"
+            - "--mysqld.password={{ .Values.mariadb.auth.rootPassword }}"
+            - "--mysqld.address={{ .Release.Name }}-mariadb:3306"
           env:
             - name: DATA_SOURCE_NAME
               value: "root:{{ .Values.mariadb.auth.rootPassword }}@tcp({{ .Release.Name }}-mariadb:3306)/"
