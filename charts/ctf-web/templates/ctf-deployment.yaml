@@ -24,13 +24,6 @@ spec:
           ports:
             - name: mariadb-port
               containerPort: {{ .Values.app.service.port }}
-          resources:
-            requests:
-              memory: "384Mi"
-              cpu: "500m"
-            limits:
-              memory: "512Mi"
-              cpu: "1000m"
           env:
             - name: DATABASE_URL
               value: "mariadb+mariadbconnector://{{ .Values.mariadb.auth.username }}:{{ .Values.mariadb.auth.password }}@{{ .Release.Name }}-mariadb:{{ .Values.mariadb.service.port }}/{{ .Values.mariadb.auth.database }}"
