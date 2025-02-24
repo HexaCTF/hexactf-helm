@@ -26,7 +26,7 @@ spec:
               containerPort: {{ .Values.app.service.port }}
           resources:
             requests:
-              memory: "256Mi"
+              memory: "384Mi"
               cpu: "500m"
             limits:
               memory: "512Mi"
