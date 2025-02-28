@@ -4,17 +4,18 @@ global:
 
 mariadb:
   enabled: true
-  image:
-    repository: mariadb
-    tag: "10.6"
-    pullPolicy: IfNotPresent
+  image: 
+    
+    repository: 10.0.10.156:30002/hexactf/hexactf-db
+    tag: "1.16.0"
+    pullPolicy: Always
   service:
     port: 3306
   auth:
     rootPassword: root_password
-    database: challenge_db
-    username: challenge_user
-    password: challenge_password
+    database: CTF
+    username: user
+    password: password
   persistence:
     enabled: true
     storageClass: "nfs-client"

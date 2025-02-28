@@ -6,7 +6,7 @@ metadata:
     app: {{ .Release.Name }}-operator
 rules:
   - apiGroups: [""]
-    resources: ["services", "namespaces"]
+    resources: ["services"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
   - apiGroups: ["apps"]
     resources: ["deployments"]
